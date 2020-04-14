@@ -1,3 +1,4 @@
+using AutoMapper;
 using GymLogger.DataAccess.Database;
 using GymLogger.Services;
 using Microsoft.AspNetCore.Builder;
@@ -29,6 +30,7 @@ namespace GymLogger
             });
 
             services.AddControllersWithViews();
+            services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IUserService, UserService>();
 
             // In production, the React files will be served from this directory

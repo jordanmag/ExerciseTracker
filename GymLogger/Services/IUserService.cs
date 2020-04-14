@@ -14,5 +14,9 @@ namespace GymLogger.Services
         Task<ServiceResponse<GetUserDTO>> GetUserById(int id);
 
         Task<ServiceResponse<List<GetUserDTO>>> AddUser(AddUserDTO newUser);
+
+        Task<ServiceResponse<GetUserDTO>> UpdateUser(UpdateUserDTO updatedUser);
+
+        Task<ServiceResponse<List<GetUserDTO>>> DeleteUser(int id);
     }
 }

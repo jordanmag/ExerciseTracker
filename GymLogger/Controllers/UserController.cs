@@ -37,5 +37,27 @@ namespace GymLogger.Controllers
         {
             return Ok(await _userService.AddUser(newUser));
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser(UpdateUserDTO updatedUser)
+        {
+            var response = await _userService.UpdateUser(updatedUser);
+
+            if (response.Data == null)
+                return NotFound(response);
+
+            return Ok(response);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var response = await _userService.DeleteUser(id);
+
+            if (response.Data == null)
+                return NotFound(response);
+
+            return Ok(response);
+        }
     }
 }
