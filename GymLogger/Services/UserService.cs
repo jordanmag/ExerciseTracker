@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using GymLogger.DataAccess.Database;
 using GymLogger.DataAccess.Models;
 using GymLogger.DTO.User;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,56 +13,58 @@ namespace GymLogger.Services
     public class UserService : IUserService
     {
         private readonly IMapper _mapper;
+        private readonly GymLoggerContext _context;
 
-        public UserService(IMapper mapper)
+        public UserService(IMapper mapper, GymLoggerContext context)
         {
             _mapper = mapper;
+            _context = context;
         }
-
-        private static List<User> users = new List<User>
-        {
-            new User() { Id = 0, Username = "jordan", Password = "xxxx"},
-            new User() { Id = 1, Username = "jayden", Password = "xxxx"}
-        };
 
         public async Task<ServiceResponse<List<GetUserDTO>>> AddUser(AddUserDTO newUser)
         {
-            ServiceResponse<List<GetUserDTO>> serviceResponse = new ServiceResponse<List<GetUserDTO>>();
+            var serviceResponse = new ServiceResponse<List<GetUserDTO>>();
+            var user = _mapper.Map<User>(newUser);
 
-            User user = _mapper.Map<User>(newUser);
-            user.Id = users.Max(u => u.Id) + 1;
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
 
-            users.Add(user);
-            serviceResponse.Data = (users.Select(u => _mapper.Map<GetUserDTO>(u))).ToList();
+            serviceResponse.Data = (_context.Users.Select(u => _mapper.Map<GetUserDTO>(u))).ToList();
             return serviceResponse;
         }
 
         public async Task<ServiceResponse<List<GetUserDTO>>> GetAllUsers()
         {
-            ServiceResponse<List<GetUserDTO>> serviceResponse = new ServiceResponse<List<GetUserDTO>>();
-            serviceResponse.Data = (users.Select(u => _mapper.Map<GetUserDTO>(u))).ToList();
+            var serviceResponse = new ServiceResponse<List<GetUserDTO>>();
+
+            var dbUsers = await _context.Users.ToListAsync();
+            serviceResponse.Data = dbUsers.Select(u => _mapper.Map<GetUserDTO>(u)).ToList();
 
             return serviceResponse;
         }
 
         public async Task<ServiceResponse<GetUserDTO>> GetUserById(int id)
         {
-            ServiceResponse<GetUserDTO> serviceResponse = new ServiceResponse<GetUserDTO>();
-            serviceResponse.Data = _mapper.Map<GetUserDTO>(users.FirstOrDefault(u => u.Id == id));
+            var serviceResponse = new ServiceResponse<GetUserDTO>();
+
+            var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            serviceResponse.Data = _mapper.Map<GetUserDTO>(dbUser);
 
             return serviceResponse;
         }
 
         public async Task<ServiceResponse<GetUserDTO>> UpdateUser(UpdateUserDTO updatedUser)
         {
-            ServiceResponse<GetUserDTO> serviceResponse = new ServiceResponse<GetUserDTO>();
+            var serviceResponse = new ServiceResponse<GetUserDTO>();
 
             try
             {
-                User user = users.FirstOrDefault(u => u.Id == updatedUser.Id);
-
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == updatedUser.Id);
                 user.Username = updatedUser.Username;
-                user.Password = updatedUser.Password;
+                //user.Password = updatedUser.Password; to be replaced with the hashed password
+
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync(); 
 
                 serviceResponse.Data = _mapper.Map<GetUserDTO>(user);
             }
@@ -75,14 +79,15 @@ namespace GymLogger.Services
 
         public async Task<ServiceResponse<List<GetUserDTO>>> DeleteUser(int id)
         {
-            ServiceResponse<List<GetUserDTO>> serviceResponse = new ServiceResponse<List<GetUserDTO>>();
+            var serviceResponse = new ServiceResponse<List<GetUserDTO>>();
 
             try
             {
-                User user = users.First(u => u.Id == id);
-                users.Remove(user);
+                var user = await _context.Users.FirstAsync(u => u.Id == id);
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
 
-                serviceResponse.Data = (users.Select(u => _mapper.Map<GetUserDTO>(u))).ToList();
+                serviceResponse.Data = (_context.Users.Select(u => _mapper.Map<GetUserDTO>(u))).ToList();
             }
             catch (Exception ex)
             {

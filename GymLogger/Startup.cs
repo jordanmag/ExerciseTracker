@@ -31,7 +31,9 @@ namespace GymLogger
 
             services.AddControllersWithViews();
             services.AddAutoMapper(typeof(Startup));
+
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAuthService, AuthService>();
 
             // In production, the React files will be served from this directory
             //services.AddSpaStaticFiles(configuration =>

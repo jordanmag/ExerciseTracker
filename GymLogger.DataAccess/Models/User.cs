@@ -14,9 +14,9 @@ namespace GymLogger.DataAccess.Models
         [MaxLength(20)]
         public string Username { get; set; }
 
-        [Required]
-        [MaxLength(20)]
-        public string Password { get; set; }
+        public byte[] PasswordHash { get; set; }
+
+        public byte[] PasswordSalt { get; set; }
 
         public DateTime Created { get; set; }
     }
