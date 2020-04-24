@@ -1,6 +1,7 @@
 using AutoMapper;
 using GymLogger.DataAccess.Database;
 using GymLogger.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace GymLogger
 {
@@ -35,6 +38,18 @@ namespace GymLogger
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+             {
+                 options.TokenValidationParameters = new TokenValidationParameters
+                 {
+                     ValidateIssuerSigningKey = true,
+                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
+                     .GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                     ValidateIssuer = false,
+                     ValidateAudience = false
+                 };
+             });
+
             // In production, the React files will be served from this directory
             //services.AddSpaStaticFiles(configuration =>
             //{
@@ -60,6 +75,8 @@ namespace GymLogger
             //app.UseSpaStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

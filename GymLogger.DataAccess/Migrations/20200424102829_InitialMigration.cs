@@ -8,17 +8,18 @@ namespace GymLogger.DataAccess.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ExerciseType",
+                name: "ExerciseTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
                     Category = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExerciseType", x => x.Id);
+                    table.PrimaryKey("PK_ExerciseTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -43,27 +44,29 @@ namespace GymLogger.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    UserId = table.Column<int>(nullable: false),
-                    ExerciseTypeId = table.Column<int>(nullable: false),
-                    Repititions = table.Column<int>(nullable: false),
-                    Duration = table.Column<int>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false)
+                    UserId = table.Column<int>(nullable: true),
+                    ExerciseTypeId = table.Column<int>(nullable: true),
+                    Reps = table.Column<int>(nullable: false),
+                    Weight = table.Column<double>(nullable: false),
+                    Duration = table.Column<DateTime>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Exercises", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Exercises_ExerciseType_ExerciseTypeId",
+                        name: "FK_Exercises_ExerciseTypes_ExerciseTypeId",
                         column: x => x.ExerciseTypeId,
-                        principalTable: "ExerciseType",
+                        principalTable: "ExerciseTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Exercises_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -83,7 +86,7 @@ namespace GymLogger.DataAccess.Migrations
                 name: "Exercises");
 
             migrationBuilder.DropTable(
-                name: "ExerciseType");
+                name: "ExerciseTypes");
 
             migrationBuilder.DropTable(
                 name: "Users");

@@ -22,20 +22,26 @@ namespace GymLogger.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Duration")
+                    b.Property<DateTime>("Duration")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("ExerciseTypeId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ExerciseTypeId")
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Reps")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Repititions")
+                    b.Property<int?>("UserId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
+                    b.Property<double>("Weight")
+                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
 
@@ -55,14 +61,15 @@ namespace GymLogger.DataAccess.Migrations
                     b.Property<string>("Category")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(50);
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExerciseType");
+                    b.ToTable("ExerciseTypes");
                 });
 
             modelBuilder.Entity("GymLogger.DataAccess.Models.User", b =>
@@ -94,15 +101,11 @@ namespace GymLogger.DataAccess.Migrations
                 {
                     b.HasOne("GymLogger.DataAccess.Models.ExerciseType", "ExerciseType")
                         .WithMany()
-                        .HasForeignKey("ExerciseTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ExerciseTypeId");
 
                     b.HasOne("GymLogger.DataAccess.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }
