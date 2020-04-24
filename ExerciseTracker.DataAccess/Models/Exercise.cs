@@ -19,6 +19,8 @@ namespace ExerciseTracker.DataAccess.Models
 
         public DateTime Duration { get; set; }
 
+        public DateTime Time { get; set; }
+
         public DateTime Created { get; set; }
 
         public DateTime LastModified { get; set; }

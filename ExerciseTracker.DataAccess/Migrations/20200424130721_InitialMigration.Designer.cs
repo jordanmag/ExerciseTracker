@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExerciseTracker.DataAccess.Migrations
 {
     [DbContext(typeof(ExerciseTrackerContext))]
-    [Migration("20200424120448_InitialMigration")]
+    [Migration("20200424130721_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,6 +38,9 @@ namespace ExerciseTracker.DataAccess.Migrations
 
                     b.Property<int>("Reps")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("INTEGER");

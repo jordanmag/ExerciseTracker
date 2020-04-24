@@ -37,6 +37,9 @@ namespace ExerciseTracker.DataAccess.Migrations
                     b.Property<int>("Reps")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("TEXT");
+
                     b.Property<int?>("UserId")
                         .HasColumnType("INTEGER");
 

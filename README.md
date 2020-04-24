@@ -1,1 +1,1 @@
-# GymLogger
+# ExerciseTracker
