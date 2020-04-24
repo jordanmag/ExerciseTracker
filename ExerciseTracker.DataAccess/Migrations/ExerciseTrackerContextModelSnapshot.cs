@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ExerciseTracker.DataAccess.Migrations
 {
-    [DbContext(typeof(GymLoggerContext))]
-    partial class GymLoggerContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(ExerciseTrackerContext))]
+    partial class ExerciseTrackerContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -40,8 +40,8 @@ namespace ExerciseTracker.DataAccess.Migrations
                     b.Property<int?>("UserId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<double>("Weight")
-                        .HasColumnType("REAL");
+                    b.Property<int>("Weight")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 

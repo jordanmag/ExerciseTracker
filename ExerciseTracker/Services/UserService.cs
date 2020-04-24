@@ -13,9 +13,9 @@ namespace ExerciseTracker.Services
     public class UserService : IUserService
     {
         private readonly IMapper _mapper;
-        private readonly GymLoggerContext _context;
+        private readonly ExerciseTrackerContext _context;
 
-        public UserService(IMapper mapper, GymLoggerContext context)
+        public UserService(IMapper mapper, ExerciseTrackerContext context)
         {
             _mapper = mapper;
             _context = context;

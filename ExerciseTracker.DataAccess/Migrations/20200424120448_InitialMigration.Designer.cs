@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ExerciseTracker.DataAccess.Migrations
 {
-    [DbContext(typeof(GymLoggerContext))]
-    [Migration("20200424102829_InitialMigration")]
+    [DbContext(typeof(ExerciseTrackerContext))]
+    [Migration("20200424120448_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,8 +42,8 @@ namespace ExerciseTracker.DataAccess.Migrations
                     b.Property<int?>("UserId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<double>("Weight")
-                        .HasColumnType("REAL");
+                    b.Property<int>("Weight")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 

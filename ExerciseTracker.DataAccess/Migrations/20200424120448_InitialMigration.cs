@@ -47,7 +47,7 @@ namespace ExerciseTracker.DataAccess.Migrations
                     UserId = table.Column<int>(nullable: true),
                     ExerciseTypeId = table.Column<int>(nullable: true),
                     Reps = table.Column<int>(nullable: false),
-                    Weight = table.Column<double>(nullable: false),
+                    Weight = table.Column<int>(nullable: false),
                     Duration = table.Column<DateTime>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
                     LastModified = table.Column<DateTime>(nullable: false)

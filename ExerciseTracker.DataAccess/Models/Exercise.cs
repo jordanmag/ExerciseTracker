@@ -15,7 +15,7 @@ namespace ExerciseTracker.DataAccess.Models
 
         public int Reps { get; set; }
 
-        public double Weight { get; set; }
+        public int Weight { get; set; }
 
         public DateTime Duration { get; set; }
 

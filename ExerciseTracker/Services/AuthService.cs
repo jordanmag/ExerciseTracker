@@ -15,10 +15,10 @@ namespace ExerciseTracker.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly GymLoggerContext _context;
+        private readonly ExerciseTrackerContext _context;
         private readonly IConfiguration _configuration;
 
-        public AuthService(GymLoggerContext context, IConfiguration configuration)
+        public AuthService(ExerciseTrackerContext context, IConfiguration configuration)
         {
             _context = context;
             _configuration = configuration;
