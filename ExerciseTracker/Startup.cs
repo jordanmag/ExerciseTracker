@@ -4,6 +4,7 @@ using ExerciseTracker.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
@@ -36,7 +37,10 @@ namespace ExerciseTracker
             services.AddAutoMapper(typeof(Startup));
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IExerciseService, ExerciseService>();
             services.AddScoped<IAuthService, AuthService>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
              {

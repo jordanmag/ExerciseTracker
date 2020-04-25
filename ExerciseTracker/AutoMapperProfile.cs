@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ExerciseTracker.DataAccess.Models;
+using ExerciseTracker.DTO.Exercise;
 using ExerciseTracker.DTO.User;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,9 @@ namespace ExerciseTracker
         {
             CreateMap<User, GetUserDTO>();
             CreateMap<AddUserDTO, User>();
+
+            CreateMap<Exercise, GetExerciseDto>();
+            CreateMap<AddExerciseDto, Exercise>();
         }
     }
 }
