@@ -1,8 +1,5 @@
-﻿using ExerciseTracker.DataAccess.Models;
-using ExerciseTracker.DTO.User;
-using System;
+﻿using ExerciseTracker.DTO.User;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ExerciseTracker.Services

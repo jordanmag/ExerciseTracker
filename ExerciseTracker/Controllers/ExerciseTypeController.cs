@@ -5,13 +5,11 @@ using System.Threading.Tasks;
 
 namespace ExerciseTracker.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class ExerciseController : ControllerBase
+    public class ExerciseTypeController : ControllerBase
     {
         private readonly IExerciseService _exerciseService;
 
-        public ExerciseController(IExerciseService exerciseService)
+        public ExerciseTypeController(IExerciseService exerciseService)
         {
             _exerciseService = exerciseService;
         }

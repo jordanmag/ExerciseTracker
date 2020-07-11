@@ -56,6 +56,16 @@ namespace ExerciseTracker.Services
             return serviceResponse;
         }
 
+        public async Task<ServiceResponse<List<GetExerciseDto>>> GetExercisesByUser()
+        {
+            var serviceResponse = new ServiceResponse<List<GetExerciseDto>>();
+
+            var dbExercises = await _context.Exercises.Where(e => e.User.Id == GetUserId()).ToListAsync();
+
+            serviceResponse.Data = dbExercises.Select(e => _mapper.Map<GetExerciseDto>(e)).ToList();
+            return serviceResponse;
+        }
+
         public async Task<ServiceResponse<GetExerciseDto>> GetExerciseById(int id)
         {
             var serviceResponse = new ServiceResponse<GetExerciseDto>();

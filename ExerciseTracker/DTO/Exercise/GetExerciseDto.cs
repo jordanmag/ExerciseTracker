@@ -1,8 +1,5 @@
-﻿using ExerciseTracker.DataAccess.Models;
+﻿using ExerciseTracker.DTO.ExerciseType;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ExerciseTracker.DTO.Exercise
 {
@@ -12,7 +9,7 @@ namespace ExerciseTracker.DTO.Exercise
 
         public string Username { get; set; }
 
-        public ExerciseType ExerciseType { get; set; }
+        public GetExerciseTypeDto ExerciseType { get; set; }
 
         public int Reps { get; set; }
 
